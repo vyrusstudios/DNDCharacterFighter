@@ -26,177 +26,33 @@ public class Main
 		
 		String characterName = null;
 		
-		// ----------- NAME -----------	
-		do {
-			// Ask for character name
-			System.out.println("What is your name?");	
-			
-			characterName = scnr.nextLine();
-			
-			// Validate the input
-			if(characterName.isBlank() || characterName.isEmpty())
-			{
-				System.out.println("Invalid Input: Name is blank. \n");
-			}
-			else if(characterName.length() > 40)
-			{
-				System.out.println("Name too long, try a shorter one \n");
-				characterName = "";
-			}
-			else
-			{
-				newCharacter.SetName(characterName);
-			}
-			
+		// Ask for Name
+		do
+		{
+			AskForCharacterName(newCharacter, scnr);
 		}while(newCharacter.name.isEmpty());
 		
-		// ----------- GENDER -----------
+		// Ask for Gender
 		do {
-			System.out.println("What is your character's gender?");
-			String gender = scnr.nextLine();
-			
-			// Validate the input
-			if(characterName.isBlank() || characterName.isEmpty())
-			{
-				System.out.println("Invalid Input: Gender is blank. \n");
-			}
-			else if(characterName.length() > 40)
-			{
-				System.out.println("Gender too long, try a shorter one \n");
-				gender = "";
-			}
-			else
-			{
-				newCharacter.SetGender(gender);
-			}
-			
+			AskForCharacterGender(newCharacter, scnr);
 		}while(newCharacter.gender.isEmpty());
 		
-		// ----------- ALIGNMENT -----------
+		// Ask for Alignment
 		do {
-			String alignment = "";
-			
-			System.out.println("\nWhat is your character's alignment?");
-			System.out.println("1. Lawful Good    2. Neutral Good    3. Chaotic Good \n"
-					+ "4. Lawful Neutral    5. True Neutral    6. Chaotic Neutral \n"
-					+ "7. Lawful Evil    8. Neutral Evil    9. Chaotic Evil");
-			
-			alignment = scnr.nextLine();
-			
-			switch(alignment)
-			{
-				case "1":
-					newCharacter.SetAlignment(DNDAlignment.LawfulGood);
-					break;
-				case "2":
-					newCharacter.SetAlignment(DNDAlignment.NeutralGood);
-					break;
-				case "3":
-					newCharacter.SetAlignment(DNDAlignment.ChaoticGood);
-					break;
-				case "4":
-					newCharacter.SetAlignment(DNDAlignment.LawfulNeutral);
-					break;
-				case "5":
-					newCharacter.SetAlignment(DNDAlignment.TrueNeutral);
-					break;
-				case "6":
-					newCharacter.SetAlignment(DNDAlignment.ChaoticNeutral);
-					break;
-				case "7":
-					newCharacter.SetAlignment(DNDAlignment.LawfulEvil);
-					break;
-				case "8": 
-					newCharacter.SetAlignment(DNDAlignment.NeutralEvil);
-					break;
-				case "9":
-					newCharacter.SetAlignment(DNDAlignment.ChaoticEvil);
-					break;
-				default:
-					System.out.println("Invalid alignment.\n");
-					break;
-			}
-			
+			AskForCharacterAlignment(newCharacter, scnr);
 		}while(newCharacter.alignment == DNDAlignment.Undecided);
 		
-		// ----------- RACE -----------
-		// TODO??? Maybe I will make entering the name as well works.
+		// Ask for Race
 		do {
-			System.out.println("\nChoose your race.");
-			System.out.println("1. Human    2. Orc    3. Dwarf \n"
-					+ "4. Elf    5. Halfling    6. Tiefling \n"
-					+ "7 Dragonborn    8. Goblin");
-			
-			String characterRace = scnr.nextLine();
-			
-			//Set the race based on the number
-			switch(characterRace)
-			{
-				case "1":
-					newCharacter.SetRace(DNDRace.Human);
-					break;
-				case "2":
-					newCharacter.SetRace(DNDRace.Orc);
-					break;
-				case "3":
-					newCharacter.SetRace(DNDRace.Dwarf);
-					break;
-				case "4":
-					newCharacter.SetRace(DNDRace.Elf);
-					break;
-				case "5":
-					newCharacter.SetRace(DNDRace.Halfling);
-					break;
-				case "6":
-					newCharacter.SetRace(DNDRace.Tiefling);
-					break;
-				case "7":
-					newCharacter.SetRace(DNDRace.Dragonborn);
-					break;
-				case "8": 
-					newCharacter.SetRace(DNDRace.Goblin);
-					break;
-				default:
-					System.out.println("Invalid race.\n");
-					break;
-			}
-			
+			AskForCharacterRace(newCharacter, scnr);			
 		}while(newCharacter.race.equals(DNDRace.Unidentified));
 		
-		// ----------- CLASS -----------
-		// TODO???? Ditto TODO above.
+		// Ask for Class
 		do {
-			System.out.println("\nChoose your class.");
-			System.out.println("1. Fighter    2. Paladin    3. Wizard \n"
-					+ "4. Rogue    5. Cleric");
+
+			AskForCharacterClass(newCharacter, scnr);
 			
-			String characterClass = scnr.nextLine();
-			
-			//Set the race based on the number
-			switch(characterClass)
-			{
-				case "1":
-					newCharacter.SetClass(DNDClass.Fighter);
-					break;
-				case "2":
-					newCharacter.SetClass(DNDClass.Paladin);
-					break;
-				case "3":
-					newCharacter.SetClass(DNDClass.Wizard);
-					break;
-				case "4":
-					newCharacter.SetClass(DNDClass.Rogue);
-					break;
-				case "5":
-					newCharacter.SetClass(DNDClass.Cleric);
-					break;
-				default:
-					System.out.println("Invalid class.\n");
-					break;
-			}
 		}while(newCharacter.characterClass.equals(DNDClass.Unidentified));
-		
-		
 		
 		// ----------- STATS -----------
 		System.out.println("\nGenerating stats\n");
@@ -204,7 +60,59 @@ public class Main
 		// Generate stats
 		newCharacter.attributes = GenerateStats();
 		
-		// TODO: Add race modifier after user chooses it.
+		// Ask to increase 1 stat
+		AskToIncreaseStat(newCharacter, scnr);
+		
+		System.out.println("Now displaying character...");
+		
+		DisplayCharacter(newCharacter);
+		
+		scnr.close();
+	}
+	
+	
+	private static void AskForCharacterRace(Character character, Scanner scnr) {
+		System.out.println("\nChoose your race.");
+		System.out.println("1. Human    2. Orc    3. Dwarf \n"
+				+ "4. Elf    5. Halfling    6. Tiefling \n"
+				+ "7 Dragonborn    8. Goblin");
+		
+		String characterRace = scnr.nextLine();
+		
+		//Set the race based on the number
+		switch(characterRace)
+		{
+			case "1":
+				character.SetRace(DNDRace.Human);
+				break;
+			case "2":
+				character.SetRace(DNDRace.Orc);
+				break;
+			case "3":
+				character.SetRace(DNDRace.Dwarf);
+				break;
+			case "4":
+				character.SetRace(DNDRace.Elf);
+				break;
+			case "5":
+				character.SetRace(DNDRace.Halfling);
+				break;
+			case "6":
+				character.SetRace(DNDRace.Tiefling);
+				break;
+			case "7":
+				character.SetRace(DNDRace.Dragonborn);
+				break;
+			case "8": 
+				character.SetRace(DNDRace.Goblin);
+				break;
+			default:
+				System.out.println("Invalid race.\n");
+				break;
+		}
+	}
+
+	private static void AskToIncreaseStat(Character character, Scanner scnr) {
 		System.out.println("\nWhich stat would you like to increase by 2?");
 		System.out.println("1. Strength    2. Dexterity    3. Constitution\n"
 				+ "4. Intelligence    5. Wisdom    6. Charisma");
@@ -216,27 +124,27 @@ public class Main
 			switch(statIncreaseChoice)
 			{
 				case "1":
-					newCharacter.IncrementStatistic("Strength", 2);
+					character.IncrementStatistic("Strength", 2);
 					hasIncreasedStat = true;
 					break;
 				case "2":
-					newCharacter.IncrementStatistic("Dexterity", 2);
+					character.IncrementStatistic("Dexterity", 2);
 					hasIncreasedStat = true;
 					break;
 				case "3":
-					newCharacter.IncrementStatistic("Constitution", 2);	
+					character.IncrementStatistic("Constitution", 2);	
 					hasIncreasedStat = true;
 					break;
 				case "4":
-					newCharacter.IncrementStatistic("Intelligence", 2);
+					character.IncrementStatistic("Intelligence", 2);
 					hasIncreasedStat = true;
 					break;
 				case "5":
-					newCharacter.IncrementStatistic("Wisdom", 2);
+					character.IncrementStatistic("Wisdom", 2);
 					hasIncreasedStat = true;
 					break;
 				case "6":
-					newCharacter.IncrementStatistic("Charisma", 2);
+					character.IncrementStatistic("Charisma", 2);
 					hasIncreasedStat = true;
 					break;
 				default:
@@ -244,14 +152,128 @@ public class Main
 					break;
 			}
 		}while(!hasIncreasedStat);
-		
-		System.out.println("Now displaying character...");
-		
-		DisplayCharacter(newCharacter);
-		
-		scnr.close();
 	}
-	
+
+	private static void AskForCharacterClass(Character character, Scanner scnr) {
+
+		System.out.println("\nChoose your class.");
+		System.out.println("1. Fighter    2. Paladin    3. Wizard \n"
+				+ "4. Rogue    5. Cleric");
+		
+		String characterClass = scnr.nextLine();
+		
+		//Set the race based on the number
+		switch(characterClass)
+		{
+			case "1":
+				character.SetClass(DNDClass.Fighter);
+				break;
+			case "2":
+				character.SetClass(DNDClass.Paladin);
+				break;
+			case "3":
+				character.SetClass(DNDClass.Wizard);
+				break;
+			case "4":
+				character.SetClass(DNDClass.Rogue);
+				break;
+			case "5":
+				character.SetClass(DNDClass.Cleric);
+				break;
+			default:
+				System.out.println("Invalid class.\n");
+				break;
+		}
+    }
+
+    private static void AskForCharacterAlignment(Character character, Scanner scnr) {
+		String alignment = "";
+			
+		System.out.println("\nWhat is your character's alignment?");
+		System.out.println("1. Lawful Good    2. Neutral Good    3. Chaotic Good \n"
+				+ "4. Lawful Neutral    5. True Neutral    6. Chaotic Neutral \n"
+				+ "7. Lawful Evil    8. Neutral Evil    9. Chaotic Evil");
+		
+		alignment = scnr.nextLine();
+		
+		switch(alignment)
+		{
+			case "1":
+				character.SetAlignment(DNDAlignment.LawfulGood);
+				break;
+			case "2":
+				character.SetAlignment(DNDAlignment.NeutralGood);
+				break;
+			case "3":
+				character.SetAlignment(DNDAlignment.ChaoticGood);
+				break;
+			case "4":
+				character.SetAlignment(DNDAlignment.LawfulNeutral);
+				break;
+			case "5":
+				character.SetAlignment(DNDAlignment.TrueNeutral);
+				break;
+			case "6":
+				character.SetAlignment(DNDAlignment.ChaoticNeutral);
+				break;
+			case "7":
+				character.SetAlignment(DNDAlignment.LawfulEvil);
+				break;
+			case "8": 
+				character.SetAlignment(DNDAlignment.NeutralEvil);
+				break;
+			case "9":
+				character.SetAlignment(DNDAlignment.ChaoticEvil);
+				break;
+			default:
+				System.out.println("Invalid alignment.\n");
+				break;
+		}
+	}
+
+	private static void AskForCharacterGender(Character newCharacter, Scanner scnr) {
+		System.out.println("What is your character's gender?");
+		String gender = scnr.nextLine();
+		
+		// Validate the input
+		if(gender.isBlank() || gender.isEmpty())
+		{
+			System.out.println("Invalid Input: Gender is blank. \n");
+		}
+		else if(gender.length() > 40)
+		{
+			System.out.println("Gender too long, try a shorter one \n");
+			gender = "";
+		}
+		else
+		{
+			newCharacter.SetGender(gender);
+		}
+	}
+
+	private static void AskForCharacterName(Character character, Scanner scnr) {
+		// Ask for character name
+		System.out.println("What is your name?");	
+					
+		String characterName = scnr.nextLine();
+
+		// Validate the input
+		if(characterName.isBlank() || characterName.isEmpty())
+		{
+			System.out.println("Invalid Input: Name is blank. \n");
+		}
+		else if(characterName.length() > 40)
+		{
+			System.out.println("Name too long, try a shorter one \n");
+			characterName = "";
+		}
+		else
+		{
+			character.SetName(characterName);
+		}
+	}
+
+
 	/**
 	 * Displays character information in a JFrame.
 	 * @param _character holds info to display
@@ -310,8 +332,6 @@ public class Main
 		w.setBackground(Color.DARK_GRAY);
 		w.setResizable(false);
 	}
-
-	
 	
 	/**
 	 * Generates all stats for a D&D Character
