@@ -9,9 +9,9 @@ class Character
 	String name = "";
 	String gender = "";
 	int Level = 1;
-	DNDAlignment alignment = DNDAlignment.Undecided;
-	DNDRace race = DNDRace.Unidentified;
-	DNDClass characterClass = DNDClass.Unidentified;
+	String alignment = "";
+	String race = "";
+	String characterClass = "";
 	Map<String,Integer> attributes;
 	
 	public void SetName(String _name)
@@ -19,17 +19,17 @@ class Character
 		name = _name;
 	}
 	
-	public void SetRace(DNDRace _race)
+	public void SetRace(String _race)
 	{
 		race = _race;
 	}
 	
-	public void SetClass(DNDClass _class)
+	public void SetClass(String _class)
 	{
 		characterClass = _class;
 	}
 	
-	public void SetAlignment(DNDAlignment _alignment)
+	public void SetAlignment(String _alignment)
 	{
 		alignment = _alignment;
 	}
