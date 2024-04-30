@@ -1,3 +1,5 @@
+package CSC241Final.DNDCharacterFighter.src;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -112,9 +114,43 @@ public class DNDGui extends JFrame {
     {
         container.removeAll();
         JLabel nameLabel = new JLabel("Name: " + character.name);
-
+        nameLabel.setForeground(Color.white);
+        nameLabel.setFont();
+        JLabel Race = new JLabel("Race: " + character.race);
+        Race.setForeground(Color.white);
+        JLabel Gender = new JLabel("Gender: " + character.gender);
+        Gender.setForeground(Color.white);
+        JLabel Class = new JLabel("Class: " + character.characterClass);
+        Class.setForeground(Color.white);
+        JLabel Strength = new JLabel("Strength: " + character.attributes.get("Strength"));
+        Strength.setForeground(Color.white);
+        JLabel Dexterity = new JLabel("Dexterity: " + character.attributes.get("Dexterity"));
+        Dexterity.setForeground(Color.white);
+        JLabel Constitution = new JLabel("Constiution: " + character.attributes.get("Constitution"));
+        Constitution.setForeground(Color.white);
+        JLabel Wisdom = new JLabel("Wisdom: " + character.attributes.get("Wisdom"));
+        Wisdom.setForeground(Color.white);
+        JLabel Intelligence = new JLabel("Intelligence: " + character.attributes.get("Intelligence"));
+        Intelligence.setForeground(Color.white);
+        JLabel Charisma = new JLabel("Charisma: " + character.attributes.get("Charisma"));
+        Charisma.setForeground(Color.white);
+        
+        
+        
         container.add(nameLabel);
-
+        container.add(Race);
+        container.add(Gender);
+        container.add(Class);
+        container.add(Strength);
+        container.add(Dexterity);
+        container.add(Constitution);
+        container.add(Intelligence);
+        container.add(Charisma);
+        container.add(Wisdom);
+        container.setBackground(Color.black);
+        
+        
+        
         gui.setVisible(true);
     }
 
